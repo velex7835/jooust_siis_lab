@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JOOUST - SIIS Lab Portal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .bg-jooust-blue { background-color: #003366; }
+        .text-jooust-blue { color: #003366; }
+        .bg-jooust-gold { background-color: #FFCC00; }
+    </style>
+</head>
+<body class="bg-gray-50 flex flex-col min-h-screen">
+    
+    <header class="bg-jooust-blue text-white shadow-md border-b-4 border-jooust-gold">
+        <div class="container mx-auto px-6 py-4 flex items-center space-x-4">
+            <img src="https://www.jooust.ac.ke/images/logo.png" alt="JOOUST Logo" class="h-16 w-auto bg-white p-1 rounded shadow-sm">
+            <div>
+                <h1 class="text-xl md:text-2xl font-bold tracking-wide">JARAMOGI OGINGA ODINGA UNIVERSITY</h1>
+                <p class="text-xs md:text-sm text-yellow-300 font-semibold tracking-wider">SCHOOL OF INFORMATICS AND INNOVATIVE SYSTEMS (SIIS)</p>
+            </div>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-6 py-10 max-w-4xl flex-grow">
+        {% if success %}
+        <div class="mb-6 p-4 bg-green-100 text-green-800 border-l-4 border-green-500 rounded shadow">
+            <strong>Success!</strong> Your incident report has been registered successfully. The 4 SIIS Lab Admins have been notified.
+        </div>
+        {% endif %}
+        
+        <div class="bg-white rounded-lg shadow-lg overflow-hidden border-t-4 border-jooust-blue p-6">
+            <h2 class="text-xl font-bold text-jooust-blue mb-4">Submit Lab Issue / Complaint</h2>
+            <form method="POST" class="space-y-4">
+                {% csrf_token %}
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Full Name</label>
+                        <input type="text" name="full_name" class="w-full p-2 border rounded focus:ring-2 focus:ring-blue-900 outline-none" required>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Email Address</label>
+                        <input type="email" name="email" class="w-full p-2 border rounded focus:ring-2 focus:ring-blue-900 outline-none" placeholder="username@student.jooust.ac.ke" required>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Registration / Staff ID</label>
+                        <input type="text" name="reg_id" class="w-full p-2 border rounded focus:ring-2 focus:ring-blue-900 outline-none" placeholder="e.g., I131/XXXX/202X" required>
+                    </div>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Select Lab Location</label>
+                        <select name="lab_room" class="w-full p-2 border rounded bg-white">
+                            <option value="SIIS Lab">SIIS Lab</option>
+                            <option value="Computer Lab 1">Computer Lab 1</option>
+                            <option value="Multidisciplinary Lab">Multidisciplinary Lab</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Computer Number / Tag</label>
+                        <input type="text" name="comp_num" class="w-full p-2 border rounded focus:ring-2 focus:ring-blue-900 outline-none" placeholder="e.g., COMP-04" required>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700">Issue Category</label>
+                        <select name="category" class="w-full p-2 border rounded bg-white">
+                            <option value="Hardware">Hardware Failure</option>
+                            <option value="Software">Software Issue</option>
+                            <option value="Network">Network Problem</option>
+                            <option value="Staff Complain">Staff Complaint</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Detailed Description of the Problem</label>
+                    <textarea name="description" rows="4" class="w-full p-2 border rounded focus:ring-2 focus:ring-blue-900 outline-none" placeholder="Describe the specific computer issue or staff complaint encountered..." required></textarea>
+                </div>
+                
+                <div class="flex justify-end">
+                    <button type="submit" class="bg-jooust-blue text-white px-8 py-3 rounded font-bold hover:bg-blue-900 transition shadow">Submit Incident Report</button>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <footer class="bg-gray-800 text-gray-400 text-center py-4 text-xs">
+        &copy; 2026 JOOUST School of Informatics and Innovative Systems. Lab Management Workspace.
+    </footer>
+</body>
+</html>

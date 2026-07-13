@@ -20,9 +20,14 @@ class LabTicket(models.Model):
         ('Multidisciplinary Lab', 'Multidisciplinary Lab'),
     ]
 
-    full_name = models.CharField(max_length=100)
-    email = models.EmailField(blank=True, null=True)
-    reg_number_or_staff_id = models.CharField(max_length=50)
+    USER_TYPE_CHOICES = [
+        ('Student', 'Student'),
+        ('Staff/Faculty', 'Staff / Faculty Member'),
+        ('Anonymous', 'Prefer not to say'),
+    ]
+
+    # Replaced full_name, email, and reg_number with an anonymous designation field
+    reported_by = models.CharField(max_length=30, choices=USER_TYPE_CHOICES, default='Anonymous')
     lab_room = models.CharField(max_length=30, choices=LAB_CHOICES)
     computer_number = models.CharField(max_length=20)
     category = models.CharField(max_length=20, choices=CATEGORY_CHOICES)

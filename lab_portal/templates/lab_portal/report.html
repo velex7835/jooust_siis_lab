@@ -8,9 +8,19 @@
 </head>
 <body class="bg-gray-100 min-h-screen flex items-center justify-center p-6">
 
-    <div class="bg-white p-8 rounded-xl shadow-md w-full max-w-2xl border-t-4 border-blue-900">
+    <div class="bg-white p-8 rounded-xl shadow-md w-full max-w-2xl border-t-4 border-blue-900 relative">
         
-        <div class="flex flex-col items-center mb-6 border-b pb-4">
+        <!-- Quick Access Admin Channel Link Button -->
+        <div class="absolute top-4 right-4">
+            <a href="/admin/" target="_blank" class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-gray-800 hover:bg-gray-900 text-white text-xs font-bold rounded-lg shadow-sm transition duration-150 ease-in-out">
+                <svg class="w-3.5 h-3.5 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"></path>
+                </svg>
+                Admin Panel
+            </a>
+        </div>
+        
+        <div class="flex flex-col items-center mb-6 border-b pb-4 mt-4">
             <img src="https://www.jooust.ac.ke/images/logo.png" alt="JOOUST Logo" class="h-20 mb-3 object-contain" onerror="this.src='https://studentsportal.jooust.ac.ke/images/logo.png'">
             <h1 class="text-xl font-extrabold text-blue-900 text-center tracking-wide uppercase">Jaramogi Oginga Odinga University</h1>
             <p class="text-sm font-semibold text-gray-600 uppercase text-center tracking-wider">of Science and Technology</p>

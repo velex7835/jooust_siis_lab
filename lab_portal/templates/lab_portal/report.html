@@ -7,245 +7,209 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @keyframes pulse-slow {
-            0%, 100% { opacity: 0.4; }
-            50% { opacity: 0.8; }
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.6; }
         }
         .animate-pulse-slow {
             animation: pulse-slow 8s infinite;
         }
     </style>
 </head>
-<body class="bg-gradient-to-br from-blue-950 via-slate-900 to-indigo-950 min-h-screen flex items-center justify-center p-4 md:p-8 relative overflow-x-hidden font-sans">
+<body class="bg-gradient-to-br from-blue-950 via-slate-955 to-slate-900 min-h-screen flex items-center justify-center p-4 md:p-8 relative overflow-x-hidden font-sans">
 
-    <!-- Decorative background glowing ambient blobs -->
-    <div class="absolute top-10 left-10 w-72 h-72 bg-blue-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse-slow"></div>
-    <div class="absolute bottom-10 right-10 w-96 h-96 bg-indigo-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse-slow"></div>
+    <div class="absolute top-10 left-10 w-72 h-72 bg-blue-600 rounded-full mix-blend-multiply filter blur-3xl opacity-15 animate-pulse-slow"></div>
+    <div class="absolute bottom-10 right-10 w-96 h-96 bg-indigo-500 rounded-full mix-blend-multiply filter blur-3xl opacity-15 animate-pulse-slow"></div>
 
-    <div class="w-full max-w-5xl grid grid-cols-1 lg:grid-cols-12 gap-8 z-10">
+    <div class="w-full max-w-6xl grid grid-cols-1 lg:grid-cols-12 gap-8 z-10">
         
-        <!-- LEFT PANEL: Dynamic interactive form (Spans 7 columns) -->
-        <div class="lg:col-span-7 bg-white/95 backdrop-blur-md p-6 md:p-8 rounded-2xl shadow-2xl border border-white/20 relative transition-all duration-300 hover:shadow-blue-900/10">
+        <div class="lg:col-span-5 flex flex-col space-y-6">
             
-            <!-- JOOUST Staff Navigation Button -->
+            <div class="bg-white/95 backdrop-blur-md p-6 rounded-2xl shadow-xl border border-white/20 flex flex-col items-center">
+                <img src="https://www.jooust.ac.ke/images/logo.png" alt="JOOUST Logo" class="h-16 mb-2.5 object-contain" onerror="this.src='https://studentsportal.jooust.ac.ke/images/logo.png'">
+                <h1 class="text-md md:text-base font-extrabold text-blue-900 text-center tracking-wide uppercase">Jaramogi Oginga Odinga University</h1>
+                <p class="text-[11px] font-semibold text-gray-500 uppercase text-center tracking-wider">School of Informatics & Innovative Systems</p>
+            </div>
+
+            <div class="bg-slate-900/90 text-white p-5 rounded-2xl border border-slate-800 shadow-xl">
+                <h3 class="text-xs font-bold text-amber-400 tracking-wider uppercase mb-3">🔴 Live Lab Operational Status</h3>
+                <div class="space-y-3.5">
+                    <div class="flex justify-between items-center bg-slate-950/80 p-3 rounded-xl border border-slate-800">
+                        <div>
+                            <p class="text-xs font-bold">Lab 1</p>
+                            <p class="text-[10px] text-slate-400">{{ stats.LAB_1.active_issues }} Active Fault reports</p>
+                        </div>
+                        <span class="px-2.5 py-1 text-[11px] font-bold rounded-full bg-{{ stats.LAB_1.color }}-500/15 text-{{ stats.LAB_1.color }}-400 border border-{{ stats.LAB_1.color }}-500/30">
+                            {{ stats.LAB_1.health }}% Healthy
+                        </span>
+                    </div>
+                    <div class="flex justify-between items-center bg-slate-950/80 p-3 rounded-xl border border-slate-800">
+                        <div>
+                            <p class="text-xs font-bold">SIIS Lab</p>
+                            <p class="text-[10px] text-slate-400">{{ stats.SIIS_LAB.active_issues }} Active Fault reports</p>
+                        </div>
+                        <span class="px-2.5 py-1 text-[11px] font-bold rounded-full bg-{{ stats.SIIS_LAB.color }}-500/15 text-{{ stats.SIIS_LAB.color }}-400 border border-{{ stats.SIIS_LAB.color }}-500/30">
+                            {{ stats.SIIS_LAB.health }}% Healthy
+                        </span>
+                    </div>
+                    <div class="flex justify-between items-center bg-slate-950/80 p-3 rounded-xl border border-slate-800">
+                        <div>
+                            <p class="text-xs font-bold">Multidisciplinary Lab</p>
+                            <p class="text-[10px] text-slate-400">{{ stats.MULTIDISCIPLINARY.active_issues }} Active Fault reports</p>
+                        </div>
+                        <span class="px-2.5 py-1 text-[11px] font-bold rounded-full bg-{{ stats.MULTIDISCIPLINARY.color }}-500/15 text-{{ stats.MULTIDISCIPLINARY.color }}-400 border border-{{ stats.MULTIDISCIPLINARY.color }}-500/30">
+                            {{ stats.MULTIDISCIPLINARY.health }}% Healthy
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-slate-900/90 text-white p-5 rounded-2xl border border-slate-800 shadow-xl">
+                <h3 class="text-xs font-bold text-blue-400 tracking-wider uppercase mb-3">🛠️ Recently Resolved Feed</h3>
+                <div class="space-y-2 max-h-[180px] overflow-y-auto pr-1">
+                    {% if recent_resolutions %}
+                        {% for ticket in recent_resolutions %}
+                            <div class="bg-slate-950/80 p-2.5 rounded-lg border border-slate-800/80 flex items-start gap-2.5">
+                                <span class="p-1 rounded bg-emerald-500/20 text-emerald-400 text-xs mt-0.5">✔</span>
+                                <div>
+                                    <p class="text-[11px] font-semibold text-slate-200">Terminal <span class="text-amber-400 font-mono">{{ ticket.computer_number }}</span> ({{ ticket.get_lab_room_display }})</p>
+                                    <p class="text-[10px] text-slate-400 italic">Resolved: {{ ticket.get_category_display }}</p>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        <p class="text-[11px] text-slate-500 text-center py-4">No recently resolved tickets yet. Maintenance logs are clean!</p>
+                    {% endif %}
+                </div>
+            </div>
+
+        </div>
+
+        <div class="lg:col-span-7 bg-white/95 backdrop-blur-md p-6 md:p-8 rounded-2xl shadow-2xl border border-white/20 relative">
+            
             <div class="absolute top-4 right-4">
-                <a href="/staff/" target="_blank" class="inline-flex items-center gap-2 px-3.5 py-2 bg-gradient-to-r from-blue-900 to-indigo-950 hover:from-blue-800 hover:to-indigo-900 text-white text-xs font-bold rounded-lg shadow-md hover:shadow-lg transition-all duration-200 transform hover:-translate-y-0.5">
-                    <svg class="w-3.5 h-3.5 text-blue-200" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"></path>
-                    </svg>
+                <a href="/staff/" target="_blank" class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-gradient-to-r from-blue-900 to-indigo-950 hover:from-blue-800 hover:to-indigo-900 text-white text-xs font-bold rounded-lg shadow transition duration-150 transform hover:-translate-y-0.5">
                     JOOUST Staff
                 </a>
             </div>
-            
-            <!-- Logo & Brand Header -->
-            <div class="flex flex-col items-center mb-6 border-b border-gray-150 pb-5 mt-4">
-                <img src="https://www.jooust.ac.ke/images/logo.png" alt="JOOUST Logo" class="h-20 mb-3 object-contain filter drop-shadow" onerror="this.src='https://studentsportal.jooust.ac.ke/images/logo.png'">
-                <h1 class="text-lg md:text-xl font-extrabold text-blue-900 text-center tracking-wide uppercase">Jaramogi Oginga Odinga University</h1>
-                <p class="text-xs font-semibold text-gray-500 uppercase text-center tracking-wider">of Science and Technology</p>
-                <span class="mt-2.5 px-3 py-1 bg-gradient-to-r from-amber-50 to-amber-100/50 text-amber-800 text-[11px] font-bold rounded-full tracking-wider uppercase border border-amber-200 shadow-sm">SIIS Lab Ticket Operations</span>
-            </div>
+
+            <h2 class="text-lg font-bold text-slate-900 mb-4 border-b pb-2 mt-4">Submit Lab Ticket</h2>
 
             {% if messages %}
                 {% for message in messages %}
-                    <div class="mb-5 p-4 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-sm font-medium shadow-sm animate-bounce">
-                        <div class="flex items-center gap-2">
-                            <svg class="w-5 h-5 text-emerald-600" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
-                            <span>{{ message }}</span>
-                        </div>
+                    <div class="mb-5 p-4 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-sm font-medium">
+                        {{ message }}
                     </div>
                 {% endfor %}
             {% endif %}
+
+            <div class="mb-4">
+                <p class="text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">⚡ Quick Templates (Auto-Fill)</p>
+                <div class="flex flex-wrap gap-2">
+                    <button type="button" onclick="applyTemplate('HARDWARE', 'Mouse / Keyboard is missing or physically damaged')" class="px-2.5 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs rounded-lg transition border border-slate-300/80 font-medium">
+                        🖱️ Missing Peripheral
+                    </button>
+                    <button type="button" onclick="applyTemplate('SOFTWARE', 'Windows Blue Screen of Death (BSOD) showing error code.')" class="px-2.5 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs rounded-lg transition border border-slate-300/80 font-medium">
+                        💻 Operating System Crash
+                    </button>
+                    <button type="button" onclick="applyTemplate('NETWORK', 'No network access. Internet connection is down or network cable disconnected.')" class="px-2.5 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs rounded-lg transition border border-slate-300/80 font-medium">
+                        🌐 Internet Offline
+                    </button>
+                </div>
+            </div>
+
+            <div class="mb-4 p-3.5 bg-slate-100/80 rounded-xl border border-slate-300/50">
+                <p class="text-xs font-bold text-slate-800 uppercase tracking-wider mb-2 flex justify-between items-center">
+                    <span>🗺️ Click Seat to Set Seat ID</span>
+                    <span class="text-[10px] text-slate-500 font-normal">Lab Map Seat Layout</span>
+                </p>
+                <div class="grid grid-cols-8 gap-1.5">
+                    <button type="button" onclick="selectSeat('COMP-01')" id="seat-COMP-01" class="seat-btn bg-white hover:bg-blue-600 hover:text-white transition p-1.5 text-xs font-mono rounded border border-slate-300 font-bold text-slate-700 text-center">01</button>
+                    <button type="button" onclick="selectSeat('COMP-02')" id="seat-COMP-02" class="seat-btn bg-white hover:bg-blue-600 hover:text-white transition p-1.5 text-xs font-mono rounded border border-slate-300 font-bold text-slate-700 text-center">02</button>
+                    <button type="button" onclick="selectSeat('COMP-03')" id="seat-COMP-03" class="seat-btn bg-white hover:bg-blue-600 hover:text-white transition p-1.5 text-xs font-mono rounded border border-slate-300 font-bold text-slate-700 text-center">03</button>
+                    <button type="button" onclick="selectSeat('COMP-04')" id="seat-COMP-04" class="seat-btn bg-white hover:bg-blue-600 hover:text-white transition p-1.5 text-xs font-mono rounded border border-slate-300 font-bold text-slate-700 text-center">04</button>
+                    <button type="button" onclick="selectSeat('COMP-05')" id="seat-COMP-05" class="seat-btn bg-white hover:bg-blue-600 hover:text-white transition p-1.5 text-xs font-mono rounded border border-slate-300 font-bold text-slate-700 text-center">05</button>
+                    <button type="button" onclick="selectSeat('COMP-06')" id="seat-COMP-06" class="seat-btn bg-white hover:bg-blue-600 hover:text-white transition p-1.5 text-xs font-mono rounded border border-slate-300 font-bold text-slate-700 text-center">06</button>
+                    <button type="button" onclick="selectSeat('COMP-07')" id="seat-COMP-07" class="seat-btn bg-white hover:bg-blue-600 hover:text-white transition p-1.5 text-xs font-mono rounded border border-slate-300 font-bold text-slate-700 text-center">07</button>
+                    <button type="button" onclick="selectSeat('COMP-08')" id="seat-COMP-08" class="seat-btn bg-white hover:bg-blue-600 hover:text-white transition p-1.5 text-xs font-mono rounded border border-slate-300 font-bold text-slate-700 text-center">08</button>
+                    <button type="button" onclick="selectSeat('COMP-09')" id="seat-COMP-09" class="seat-btn bg-white hover:bg-blue-600 hover:text-white transition p-1.5 text-xs font-mono rounded border border-slate-300 font-bold text-slate-700 text-center">09</button>
+                    <button type="button" onclick="selectSeat('COMP-10')" id="seat-COMP-10" class="seat-btn bg-white hover:bg-blue-600 hover:text-white transition p-1.5 text-xs font-mono rounded border border-slate-300 font-bold text-slate-700 text-center">10</button>
+                    <button type="button" onclick="selectSeat('COMP-11')" id="seat-COMP-11" class="seat-btn bg-white hover:bg-blue-600 hover:text-white transition p-1.5 text-xs font-mono rounded border border-slate-300 font-bold text-slate-700 text-center">11</button>
+                    <button type="button" onclick="selectSeat('COMP-12')" id="seat-COMP-12" class="seat-btn bg-white hover:bg-blue-600 hover:text-white transition p-1.5 text-xs font-mono rounded border border-slate-300 font-bold text-slate-700 text-center">12</button>
+                    <button type="button" onclick="selectSeat('COMP-13')" id="seat-COMP-13" class="seat-btn bg-white hover:bg-blue-600 hover:text-white transition p-1.5 text-xs font-mono rounded border border-slate-300 font-bold text-slate-700 text-center">13</button>
+                    <button type="button" onclick="selectSeat('COMP-14')" id="seat-COMP-14" class="seat-btn bg-white hover:bg-blue-600 hover:text-white transition p-1.5 text-xs font-mono rounded border border-slate-300 font-bold text-slate-700 text-center">14</button>
+                    <button type="button" onclick="selectSeat('COMP-15')" id="seat-COMP-15" class="seat-btn bg-white hover:bg-blue-600 hover:text-white transition p-1.5 text-xs font-mono rounded border border-slate-300 font-bold text-slate-700 text-center">15</button>
+                    <button type="button" onclick="selectSeat('COMP-16')" id="seat-COMP-16" class="seat-btn bg-white hover:bg-blue-600 hover:text-white transition p-1.5 text-xs font-mono rounded border border-slate-300 font-bold text-slate-700 text-center">16</button>
+                </div>
+            </div>
 
             <form method="POST" enctype="multipart/form-data" class="space-y-4">
                 {% csrf_token %}
                 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
-                        <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1">Lab Room Location</label>
+                        <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Select Lab Location</label>
                         {{ form.lab_room }}
                     </div>
                     <div>
-                        <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1">Computer Name / Tag</label>
+                        <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Computer Number / Tag</label>
                         {{ form.computer_number }}
                     </div>
                 </div>
 
                 <div>
-                    <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1">Problem Category</label>
+                    <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Issue Category</label>
                     {{ form.category }}
                 </div>
 
                 <div>
-                    <div class="flex justify-between items-center mb-1">
-                        <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider">Trouble Description</label>
-                        <span id="char-counter" class="text-[11px] text-gray-400 font-mono">0 / 400 characters</span>
-                    </div>
+                    <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Detailed Description of the Issue</label>
                     {{ form.description }}
                 </div>
 
-                <div class="p-4 bg-slate-50 rounded-xl border border-dashed border-slate-300 hover:border-blue-400 transition-all duration-200">
-                    <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1">Attach Image Proof (Optional)</label>
+                <div>
+                    <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Attach Error Screenshot (Optional)</label>
                     {{ form.screenshot }}
-                    <p id="file-info" class="text-[11px] text-slate-500 mt-1.5 hidden font-mono"></p>
                 </div>
 
-                <div class="bg-blue-50/50 p-4 rounded-xl border border-blue-100/80">
-                    <label class="block text-xs font-bold text-blue-950 uppercase tracking-wider mb-1">Status Notifications (Optional)</label>
-                    <p class="text-xs text-gray-500 mb-2">Include your email below if you'd like to get an email warning once our techs patch the problem.</p>
+                <div class="bg-blue-50/50 p-4 rounded-xl border border-blue-100">
+                    <label class="block text-sm font-bold text-blue-950 mb-1">Receive Status Updates (Optional)</label>
                     {{ form.student_email }}
                 </div>
 
-                <button type="submit" class="w-full bg-gradient-to-r from-blue-900 to-indigo-950 hover:from-blue-800 hover:to-indigo-900 text-white font-bold py-3 px-4 rounded-xl shadow-lg hover:shadow-xl transition-all duration-200 transform hover:-translate-y-0.5 tracking-wider uppercase text-xs">
-                    File Live Portal Ticket
+                <button type="submit" class="w-full bg-gradient-to-r from-blue-950 to-indigo-950 hover:from-blue-900 hover:to-indigo-900 text-white font-bold py-2.5 px-4 rounded-xl shadow-lg transition tracking-wide uppercase text-xs">
+                    Submit Portal Ticket
                 </button>
             </form>
         </div>
 
-        <!-- RIGHT PANEL: Dynamic Real-Time Ticket Preview (Spans 5 columns) -->
-        <div class="lg:col-span-5 flex flex-col justify-start space-y-6">
-            
-            <!-- Interactive Ticket Preview Card -->
-            <div class="bg-gradient-to-b from-slate-900 to-slate-950 text-white p-6 rounded-2xl shadow-2xl border border-slate-800 relative overflow-hidden">
-                <div class="absolute top-0 right-0 bg-blue-600 text-white text-[9px] font-mono tracking-widest uppercase px-3 py-1 rounded-bl-lg font-bold">
-                    LIVE TICKET PREVIEW
-                </div>
-
-                <h3 class="text-sm font-bold tracking-widest text-blue-400 uppercase mb-4">Ticket Manifest</h3>
-                
-                <div class="space-y-4">
-                    <div>
-                        <p class="text-[10px] uppercase text-slate-400 tracking-wider">Facility Location</p>
-                        <p id="preview-lab" class="text-sm font-bold text-slate-100">Please select a lab...</p>
-                    </div>
-
-                    <div class="grid grid-cols-2 gap-4">
-                        <div>
-                            <p class="text-[10px] uppercase text-slate-400 tracking-wider">Terminal ID</p>
-                            <p id="preview-pc" class="text-sm font-semibold text-amber-400 font-mono">---</p>
-                        </div>
-                        <div>
-                            <p class="text-[10px] uppercase text-slate-400 tracking-wider">Category</p>
-                            <span id="preview-category" class="inline-block px-2 py-0.5 bg-slate-800 text-[11px] rounded font-semibold text-slate-300 mt-0.5">UNASSIGNED</span>
-                        </div>
-                    </div>
-
-                    <div>
-                        <p class="text-[10px] uppercase text-slate-400 tracking-wider">Complaint / Description</p>
-                        <p id="preview-desc" class="text-xs text-slate-300 leading-relaxed italic bg-slate-950/80 p-2.5 rounded-lg border border-slate-800 min-h-[60px]">Waiting for your issue description input...</p>
-                    </div>
-
-                    <div>
-                        <p class="text-[10px] uppercase text-slate-400 tracking-wider mb-1.5">Attached Diagnostic File</p>
-                        <div class="relative bg-slate-950 rounded-lg border border-slate-800 overflow-hidden flex items-center justify-center min-h-[120px]">
-                            <img id="preview-image" src="" alt="No attachment uploaded" class="max-h-36 object-contain hidden z-10">
-                            <div id="image-placeholder" class="text-center text-slate-500 p-4">
-                                <svg class="w-8 h-8 mx-auto mb-1 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
-                                </svg>
-                                <p class="text-[10px] uppercase">No screenshot attached</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Operations Status Progress Widget -->
-            <div class="bg-slate-900/60 backdrop-blur text-white p-5 rounded-2xl border border-slate-800/80">
-                <h4 class="text-xs font-bold text-blue-400 tracking-wider uppercase mb-3.5">Deployment Operations Flow</h4>
-                <div class="relative pl-6 border-l-2 border-slate-800 space-y-4 text-xs">
-                    <div class="relative">
-                        <div class="absolute -left-[31px] top-0.5 w-4.5 h-4.5 rounded-full bg-emerald-500 border-4 border-slate-900 flex items-center justify-center"></div>
-                        <p class="font-bold text-slate-200">Step 1: Submission</p>
-                        <p class="text-[11px] text-slate-400">File is uploaded securely into the database portal.</p>
-                    </div>
-                    <div class="relative">
-                        <div class="absolute -left-[31px] top-0.5 w-4.5 h-4.5 rounded-full bg-blue-500 border-4 border-slate-900"></div>
-                        <p class="font-bold text-slate-200">Step 2: Dispatch</p>
-                        <p class="text-[11px] text-slate-400">Tech receives notice and is deployed to the specified lab.</p>
-                    </div>
-                    <div class="relative">
-                        <div class="absolute -left-[31px] top-0.5 w-4.5 h-4.5 rounded-full bg-slate-700 border-4 border-slate-900"></div>
-                        <p class="font-bold text-slate-400">Step 3: Resolution</p>
-                        <p class="text-[11px] text-slate-500">Work is finished, log updated, status confirmation email sent.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
     </div>
 
-    <!-- Interactive script engine handling all UI updates -->
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            // Locate form input targets dynamically
-            const labSelect = document.querySelector('[name="lab_room"]');
-            const pcInput = document.querySelector('[name="computer_number"]');
+        function applyTemplate(category, description) {
             const categorySelect = document.querySelector('[name="category"]');
-            const descTextArea = document.querySelector('[name="description"]');
-            const fileInput = document.querySelector('[name="screenshot"]');
+            const descriptionArea = document.querySelector('[name="description"]');
+            
+            categorySelect.value = category;
+            descriptionArea.value = description;
+            
+            categorySelect.dispatchEvent(new Event('change'));
+        }
 
-            // Locate preview output display elements
-            const previewLab = document.getElementById('preview-lab');
-            const previewPc = document.getElementById('preview-pc');
-            const previewCategory = document.getElementById('preview-category');
-            const previewDesc = document.getElementById('preview-desc');
-            const previewImage = document.getElementById('preview-image');
-            const imagePlaceholder = document.getElementById('image-placeholder');
-            const charCounter = document.getElementById('char-counter');
-            const fileInfoLabel = document.getElementById('file-info');
-
-            // Set dynamic character tracking bounds
-            const charLimit = 400;
-            descTextArea.setAttribute('maxlength', charLimit);
-
-            // Real-time Event Listeners
-            labSelect.addEventListener('change', () => {
-                previewLab.textContent = labSelect.options[labSelect.selectedIndex].text || "Please select a lab...";
+        function selectSeat(seatId) {
+            const pcInput = document.querySelector('[name="computer_number"]');
+            pcInput.value = seatId;
+            
+            document.querySelectorAll('.seat-btn').forEach(btn => {
+                btn.classList.remove('bg-blue-600', 'text-white');
+                btn.classList.add('bg-white', 'text-slate-700');
             });
-
-            pcInput.addEventListener('input', () => {
-                previewPc.textContent = pcInput.value.trim().toUpperCase() || "---";
-            });
-
-            categorySelect.addEventListener('change', () => {
-                const text = categorySelect.options[categorySelect.selectedIndex].text;
-                previewCategory.textContent = categorySelect.value ? text.split(' ')[0].toUpperCase() : "UNASSIGNED";
-            });
-
-            descTextArea.addEventListener('input', () => {
-                const textLength = descTextArea.value.length;
-                charCounter.textContent = `${textLength} / ${charLimit} characters`;
-                
-                if (textLength >= charLimit - 20) {
-                    charCounter.classList.add('text-red-400');
-                } else {
-                    charCounter.classList.remove('text-red-400');
-                }
-                
-                previewDesc.textContent = descTextArea.value.trim() || "Waiting for your issue description input...";
-            });
-
-            fileInput.addEventListener('change', function() {
-                const file = this.files[0];
-                if (file) {
-                    // Check file size limit (max 5MB)
-                    const fileSizeMB = (file.size / (1024 * 1024)).toFixed(2);
-                    fileInfoLabel.textContent = `📋 File: ${file.name} (${fileSizeMB} MB)`;
-                    fileInfoLabel.classList.remove('hidden');
-
-                    const reader = new FileReader();
-                    reader.onload = function(e) {
-                        previewImage.src = e.target.result;
-                        previewImage.classList.remove('hidden');
-                        imagePlaceholder.classList.add('hidden');
-                    }
-                    reader.readAsDataURL(file);
-                } else {
-                    fileInfoLabel.classList.add('hidden');
-                    previewImage.classList.add('hidden');
-                    imagePlaceholder.classList.remove('hidden');
-                }
-            });
-        });
+            
+            const activeBtn = document.getElementById('seat-' + seatId);
+            if (activeBtn) {
+                activeBtn.classList.remove('bg-white', 'text-slate-700');
+                activeBtn.classList.add('bg-blue-600', 'text-white');
+            }
+        }
     </script>
 
 </body>

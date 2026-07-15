@@ -8,11 +8,13 @@ class LabTicket(models.Model):
         ('MULTIDISCIPLINARY', 'Multidisciplinary Lab'),
     ]
 
+    # Added 'STAFF_COMPLAINT' to the category choices
     CATEGORY_CHOICES = [
         ('HARDWARE', 'Hardware Fault (Keyboard, Mouse, Monitor, PC)'),
         ('SOFTWARE', 'Software & OS issues'),
         ('NETWORK', 'Network & Internet Connection issues'),
         ('POWER', 'Power & Electrical supply issues'),
+        ('STAFF_COMPLAINT', 'Staff Complaint'),
     ]
 
     STATUS_CHOICES = [
@@ -26,7 +28,6 @@ class LabTicket(models.Model):
     category = models.CharField(max_length=100, choices=CATEGORY_CHOICES)
     description = models.TextField()
     
-    # New: Optional Screenshot feature
     screenshot = models.ImageField(upload_to='ticket_screenshots/', blank=True, null=True, help_text="Upload an error screenshot")
     
     student_email = models.EmailField(blank=True, null=True, help_text="Optional for status email updates")

@@ -2,19 +2,18 @@ from django.db import models
 from django.contrib.auth.models import User
 
 class LabTicket(models.Model):
-    # Fixed: Added official choices for the Lab selection fields
+    # Restored your exact labs: Lab 1, SIIS Lab, and Multidisciplinary Lab
     LAB_ROOM_CHOICES = [
-        ('SIIS_LAB_1', 'SIIS Lab 1 (Ground Floor)'),
-        ('SIIS_LAB_2', 'SIIS Lab 2 (First Floor)'),
-        ('SIIS_POSTGRAD', 'SIIS PostGrad Lab'),
-        ('MAIN_LIBRARY_LAB', 'Main Library Computer Lab'),
+        ('LAB_1', 'Lab 1'),
+        ('SIIS_LAB', 'SIIS Lab'),
+        ('MULTIDISCIPLINARY', 'Multidisciplinary Lab'),
     ]
 
     CATEGORY_CHOICES = [
-        ('HARDWARE', 'Hardware Fault (Monitor, Mouse, Keyboard, PC)'),
-        ('SOFTWARE', 'Software Issue (OS Crash, Missing Apps, Activation)'),
-        ('NETWORK', 'Network & Internet Connectivity Outage'),
-        ('POWER', 'Power Supply & UPS Failure'),
+        ('HARDWARE', 'Hardware Fault (Keyboard, Mouse, Monitor, PC)'),
+        ('SOFTWARE', 'Software & OS issues'),
+        ('NETWORK', 'Network & Internet Connection issues'),
+        ('POWER', 'Power & Electrical supply issues'),
     ]
 
     STATUS_CHOICES = [

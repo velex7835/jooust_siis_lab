@@ -4,7 +4,7 @@ from .models import LabTicket
 class LabTicketForm(forms.ModelForm):
     class Meta:
         model = LabTicket
-        fields = ['lab_room', 'computer_number', 'category', 'description']
+        fields = ['lab_room', 'computer_number', 'category', 'description', 'student_email']
         widgets = {
             'lab_room': forms.Select(attrs={
                 'class': 'w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5'
@@ -19,6 +19,10 @@ class LabTicketForm(forms.ModelForm):
             'description': forms.Textarea(attrs={
                 'rows': 4,
                 'placeholder': 'Describe what is wrong with the machine or equipment...',
+                'class': 'w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5'
+            }),
+            'student_email': forms.EmailInput(attrs={
+                'placeholder': 'your-email@student.jooust.ac.ke (Optional)',
                 'class': 'w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5'
             }),
         }

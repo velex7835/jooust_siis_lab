@@ -10,25 +10,15 @@
 
     <div class="bg-white p-8 rounded-xl shadow-md w-full max-w-2xl border-t-4 border-blue-900">
         
-        <!-- JOOUST & SIIS Header Integration Section -->
         <div class="flex flex-col items-center mb-6 border-b pb-4">
-            <!-- University Crest Logo (uses official domain asset path) -->
             <img src="https://www.jooust.ac.ke/images/logo.png" alt="JOOUST Logo" class="h-20 mb-3 object-contain" onerror="this.src='https://studentsportal.jooust.ac.ke/images/logo.png'">
-            
-            <h1 class="text-xl font-extrabold text-blue-900 text-center tracking-wide uppercase">
-                Jaramogi Oginga Odinga University
-            </h1>
-            <p class="text-sm font-semibold text-gray-600 uppercase text-center tracking-wider">
-                of Science and Technology
-            </p>
-            <span class="mt-2 px-3 py-1 bg-blue-50 text-blue-800 text-xs font-bold rounded-full tracking-wider uppercase border border-blue-200">
-                School of Informatics & Innovative Systems (SIIS)
-            </span>
+            <h1 class="text-xl font-extrabold text-blue-900 text-center tracking-wide uppercase">Jaramogi Oginga Odinga University</h1>
+            <p class="text-sm font-semibold text-gray-600 uppercase text-center tracking-wider">of Science and Technology</p>
+            <span class="mt-2 px-3 py-1 bg-blue-50 text-blue-800 text-xs font-bold rounded-full tracking-wider uppercase border border-blue-200">School of Informatics & Innovative Systems (SIIS)</span>
         </div>
 
         <h2 class="text-lg font-bold text-gray-800 mb-6 text-center">Submit Lab Issue / Complaint</h2>
         
-        <!-- Django Success Alert Message -->
         {% if messages %}
             {% for message in messages %}
                 <div class="mb-5 p-4 rounded-lg bg-green-50 border border-green-200 text-green-800 text-sm font-medium">
@@ -45,7 +35,6 @@
                     <label class="block text-sm font-semibold text-gray-700 mb-1">Select Lab Location</label>
                     {{ form.lab_room }}
                 </div>
-
                 <div>
                     <label class="block text-sm font-semibold text-gray-700 mb-1">Computer Number / Tag</label>
                     {{ form.computer_number }}
@@ -60,6 +49,12 @@
             <div>
                 <label class="block text-sm font-semibold text-gray-700 mb-1">Detailed Description of the Issue</label>
                 {{ form.description }}
+            </div>
+
+            <div class="bg-blue-50/50 p-4 rounded-xl border border-blue-100">
+                <label class="block text-sm font-bold text-blue-950 mb-1">Receive Status Updates (Optional)</label>
+                <p class="text-xs text-gray-500 mb-2">Provide an email address if you want to know when a technician resolves this machine issue.</p>
+                {{ form.student_email }}
             </div>
 
             <button type="submit" class="w-full bg-blue-900 hover:bg-blue-850 text-white font-bold py-2.5 px-4 rounded-lg transition duration-200 shadow tracking-wide uppercase text-sm">

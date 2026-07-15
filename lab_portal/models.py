@@ -1,40 +1,25 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 class LabTicket(models.Model):
     STATUS_CHOICES = [
-        ('Pending', 'Pending'),
-        ('In Progress', 'In Progress'),
-        ('Resolved', 'Resolved'),
-    ]
-    
-    CATEGORY_CHOICES = [
-        ('Hardware', 'Hardware Failure (Mouse, Keyboard, Screen)'),
-        ('Software', 'Software/OS Issue (Crashing, Missing Apps)'),
-        ('Network', 'Network/Internet Disconnection'),
-        ('Staff Complain', 'Staff/Lab Assistance Complaint'),
+        ('Pending', 'Pending Review'),
+        ('Assigned', 'Assigned to Technician'),
+        ('Resolved', 'Resolved / Work Done'),
     ]
 
-    LAB_CHOICES = [
-        ('SIIS Lab', 'SIIS Lab'),
-        ('Computer Lab 1', 'Computer Lab 1'),
-        ('Multidisciplinary Lab', 'Multidisciplinary Lab'),
-    ]
-
-    USER_TYPE_CHOICES = [
-        ('Student', 'Student'),
-        ('Staff/Faculty', 'Staff / Faculty Member'),
-        ('Anonymous', 'Prefer not to say'),
-    ]
-
-    # Replaced full_name, email, and reg_number with an anonymous designation field
-    reported_by = models.CharField(max_length=30, choices=USER_TYPE_CHOICES, default='Anonymous')
-    lab_room = models.CharField(max_length=30, choices=LAB_CHOICES)
-    computer_number = models.CharField(max_length=20)
-    category = models.CharField(max_length=20, choices=CATEGORY_CHOICES)
+    lab_room = models.CharField(max_length=50)
+    computer_number = models.CharField(max_length=50)
+    category = models.CharField(max_length=100)
     description = models.TextField()
+    
+    # New IT Operations Fields
+    student_email = models.EmailField(blank=True, null=True, help_text="Optional for status email updates")
+    assigned_technician = models.ForeignKey(User, on_delete=models.SET_NULL, blank=True, null=True, limit_choices_to={'is_staff': True})
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='Pending')
-    admin_feedback = models.TextField(blank=True, null=True)
+    
     created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return f"{self.category} on {self.computer_number} [{self.status}]"
+        return f"{self.category} - {self.lab_room} ({self.status})"

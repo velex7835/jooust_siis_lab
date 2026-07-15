@@ -71,3 +71,4 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 EMAIL_HOST_USER = 'siis-lab-support@jooust.ac.ke'
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

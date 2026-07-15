@@ -2,7 +2,6 @@ from django.db import models
 from django.contrib.auth.models import User
 
 class LabTicket(models.Model):
-    # Restored your exact labs: Lab 1, SIIS Lab, and Multidisciplinary Lab
     LAB_ROOM_CHOICES = [
         ('LAB_1', 'Lab 1'),
         ('SIIS_LAB', 'SIIS Lab'),
@@ -26,6 +25,9 @@ class LabTicket(models.Model):
     computer_number = models.CharField(max_length=50)
     category = models.CharField(max_length=100, choices=CATEGORY_CHOICES)
     description = models.TextField()
+    
+    # New: Optional Screenshot feature
+    screenshot = models.ImageField(upload_to='ticket_screenshots/', blank=True, null=True, help_text="Upload an error screenshot")
     
     student_email = models.EmailField(blank=True, null=True, help_text="Optional for status email updates")
     assigned_technician = models.ForeignKey(User, on_delete=models.SET_NULL, blank=True, null=True, limit_choices_to={'is_staff': True})

@@ -1,8 +1,9 @@
 from django.contrib import admin
-from django.urls import path
-from lab_portal.views import report_issue
+from django.urls import path, include
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('', report_issue, name='report_issue'),
-]
+    path('admin/', admin.site.admin_urls if hasattr(admin.site, 'admin_urls') else admin.site.urls),
+    path('', include('lab_portal.urls')),
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

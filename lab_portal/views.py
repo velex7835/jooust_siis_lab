@@ -7,8 +7,8 @@ def report_issue(request):
         form = LabTicketForm(request.POST)
         if form.is_valid():
             form.save()
-            messages.success(request, "Your issue has been successfully submitted!")
-            return redirect('/admin/')  # Redirects straight to the Admin channel login/dashboard
+            messages.success(request, "Your issue has been successfully submitted to the SIIS Lab Admin!")
+            return redirect('report_issue')  # Keeps you on the page with a fresh form
     else:
         form = LabTicketForm()
         

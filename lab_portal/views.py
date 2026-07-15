@@ -1,17 +1,15 @@
-from django.shortcuts import render
-from .models import LabTicket
+from django.shortcuts import render, redirect
+from django.contrib import messages
+from .forms import LabTicketForm
 
 def report_issue(request):
     if request.method == 'POST':
-        LabTicket.objects.create(
-            full_name=request.POST.get('full_name'),
-            email=request.POST.get('email'),
-            reg_number_or_staff_id=request.POST.get('reg_id'),
-            lab_room=request.POST.get('lab_room'),
-            computer_number=request.POST.get('comp_num'),
-            category=request.POST.get('category'),
-            description=request.POST.get('description'),
-        )
-        return render(request, 'lab_portal/report.html', {'success': True})
+        form = LabTicketForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Your issue has been successfully submitted to the lab admin!")
+            return redirect('report_issue')  # Reloads the page with a clean form
+    else:
+        form = LabTicketForm()
         
-    return render(request, 'lab_portal/report.html')
+    return render(request, 'lab_portal/report.html', {'form': form})

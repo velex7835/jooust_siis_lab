@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JOOUST SIIS Lab Operations Portal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @keyframes pulse-slow {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.6; }
+        }
+        .animate-pulse-slow {
+            animation: pulse-slow 8s infinite;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-blue-950 via-slate-955 to-slate-900 min-h-screen flex items-center justify-center p-4 sm:p-6 md:p-8 relative overflow-x-hidden font-sans">
+
+    <div class="absolute top-10 left-10 w-48 sm:w-72 h-48 sm:h-72 bg-blue-600 rounded-full mix-blend-multiply filter blur-3xl opacity-15 animate-pulse-slow"></div>
+    <div class="absolute bottom-10 right-10 w-64 sm:w-96 h-64 sm:h-96 bg-indigo-500 rounded-full mix-blend-multiply filter blur-3xl opacity-15 animate-pulse-slow"></div>
+
+    <div class="w-full max-w-4xl z-10 space-y-6">
+        
+        <div class="bg-white/95 backdrop-blur-md p-6 sm:p-8 rounded-2xl shadow-xl border border-white/20 flex flex-col items-center text-center relative">
+            <div class="absolute top-4 right-4 flex gap-2">
+                <a href="/staff/" target="_blank" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-900 text-white text-[11px] sm:text-xs font-bold rounded-lg shadow transition">
+                    JOOUST Staff
+                </a>
+            </div>
+            
+            <img src="https://www.jooust.ac.ke/images/logo.png" alt="JOOUST Logo" class="h-16 sm:h-20 mb-3 object-contain" onerror="this.src='https://studentsportal.jooust.ac.ke/images/logo.png'">
+            <h1 class="text-base sm:text-xl font-extrabold text-blue-900 uppercase tracking-wide px-2">Jaramogi Oginga Odinga University</h1>
+            <p class="text-xs font-semibold text-gray-500 uppercase tracking-wider">School of Informatics & Innovative Systems</p>
+            
+            <div class="mt-6 w-full max-w-sm">
+                <a href="{% url 'report_issue' %}" class="block text-center w-full bg-gradient-to-r from-blue-900 to-indigo-950 hover:from-blue-800 hover:to-indigo-900 text-white font-bold py-3.5 px-6 rounded-xl shadow-lg hover:shadow-blue-900/20 transition-all duration-150 transform hover:-translate-y-0.5 tracking-wider uppercase text-xs sm:text-sm">
+                    ⚠️ Report an Issue / Faulty PC
+                </a>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            
+            <div class="bg-slate-900/90 text-white p-5 sm:p-6 rounded-2xl border border-slate-800 shadow-xl">
+                <h3 class="text-xs font-bold text-amber-400 tracking-wider uppercase mb-4 flex items-center gap-1.5">
+                    <span class="w-2.5 h-2.5 rounded-full bg-red-500 animate-ping"></span>
+                    Live Lab Health Status
+                </h3>
+                <div class="space-y-3">
+                    <div class="flex justify-between items-center bg-slate-950/80 p-3 rounded-xl border border-slate-800/80">
+                        <div>
+                            <p class="text-xs font-bold">Lab 1 (20 Seats)</p>
+                            <p class="text-[10px] text-slate-400">{{ stats.LAB_1.active_issues }} Active Faults</p>
+                        </div>
+                        <span class="px-2.5 py-1 text-[10px] font-bold rounded-full bg-{{ stats.LAB_1.color }}-500/15 text-{{ stats.LAB_1.color }}-400 border border-{{ stats.LAB_1.color }}-500/30">
+                            {{ stats.LAB_1.health }}% Healthy
+                        </span>
+                    </div>
+
+                    <div class="flex justify-between items-center bg-slate-950/80 p-3 rounded-xl border border-slate-800/80">
+                        <div>
+                            <p class="text-xs font-bold">SIIS Lab (28 Seats)</p>
+                            <p class="text-[10px] text-slate-400">{{ stats.SIIS_LAB.active_issues }} Active Faults</p>
+                        </div>
+                        <span class="px-2.5 py-1 text-[10px] font-bold rounded-full bg-{{ stats.SIIS_LAB.color }}-500/15 text-{{ stats.SIIS_LAB.color }}-400 border border-{{ stats.SIIS_LAB.color }}-500/30">
+                            {{ stats.SIIS_LAB.health }}% Healthy
+                        </span>
+                    </div>
+
+                    <div class="flex justify-between items-center bg-slate-950/80 p-3 rounded-xl border border-slate-800/80">
+                        <div>
+                            <p class="text-xs font-bold">Multidisciplinary (80 Seats)</p>
+                            <p class="text-[10px] text-slate-400">{{ stats.MULTIDISCIPLINARY.active_issues }} Active Faults</p>
+                        </div>
+                        <span class="px-2.5 py-1 text-[10px] font-bold rounded-full bg-{{ stats.MULTIDISCIPLINARY.color }}-500/15 text-{{ stats.MULTIDISCIPLINARY.color }}-400 border border-{{ stats.MULTIDISCIPLINARY.color }}-500/30">
+                            {{ stats.MULTIDISCIPLINARY.health }}% Healthy
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-slate-900/90 text-white p-5 sm:p-6 rounded-2xl border border-slate-800 shadow-xl">
+                <h3 class="text-xs font-bold text-blue-400 tracking-wider uppercase mb-4">🛠️ Recently Resolved Tickets</h3>
+                <div class="space-y-2.5 max-h-[220px] overflow-y-auto pr-1">
+                    {% if recent_resolutions %}
+                        {% for ticket in recent_resolutions %}
+                            <div class="bg-slate-950/80 p-3 rounded-xl border border-slate-800/80 flex items-start gap-3">
+                                <span class="p-1 rounded bg-emerald-500/20 text-emerald-400 text-xs mt-0.5">✔</span>
+                                <div>
+                                    <p class="text-xs font-bold text-slate-200">Terminal <span class="text-amber-400 font-mono">{{ ticket.computer_number }}</span></p>
+                                    <p class="text-[10px] text-slate-400 italic">resolved in {{ ticket.get_lab_room_display }}</p>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    {% else %}
+                        <div class="text-center py-8 text-slate-500 text-xs italic">
+                            No recently resolved logs. Laboratories are operational!
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+</html>

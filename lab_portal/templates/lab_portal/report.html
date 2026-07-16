@@ -5,178 +5,98 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Submit Lab Issue | JOOUST SIIS Lab Portal</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        @keyframes pulse-slow {
-            0%, 100% { opacity: 0.3; }
-            50% { opacity: 0.6; }
-        }
-        .animate-pulse-slow {
-            animation: pulse-slow 8s infinite;
-        }
-    </style>
 </head>
-<body class="bg-gradient-to-br from-blue-950 via-slate-955 to-slate-900 min-h-screen flex items-center justify-center p-4 md:p-8 relative overflow-x-hidden font-sans">
+<body class="bg-gradient-to-br from-blue-950 via-slate-955 to-slate-900 min-h-screen flex items-center justify-center p-3 sm:p-6 relative overflow-x-hidden font-sans">
 
-    <div class="absolute top-10 left-10 w-72 h-72 bg-blue-600 rounded-full mix-blend-multiply filter blur-3xl opacity-15 animate-pulse-slow"></div>
-    <div class="absolute bottom-10 right-10 w-96 h-96 bg-indigo-500 rounded-full mix-blend-multiply filter blur-3xl opacity-15 animate-pulse-slow"></div>
-
-    <div class="w-full max-w-6xl grid grid-cols-1 lg:grid-cols-12 gap-8 z-10">
+    <div class="w-full max-w-2xl bg-white/95 backdrop-blur-md p-5 sm:p-8 rounded-2xl shadow-2xl border border-white/20 relative z-10">
         
-        <div class="lg:col-span-5 flex flex-col space-y-6">
-            
-            <div class="bg-white/95 backdrop-blur-md p-6 rounded-2xl shadow-xl border border-white/20 flex flex-col items-center">
-                <img src="https://www.jooust.ac.ke/images/logo.png" alt="JOOUST Logo" class="h-16 mb-2.5 object-contain" onerror="this.src='https://studentsportal.jooust.ac.ke/images/logo.png'">
-                <h1 class="text-md md:text-base font-extrabold text-blue-900 text-center tracking-wide uppercase">Jaramogi Oginga Odinga University</h1>
-                <p class="text-[11px] font-semibold text-gray-500 uppercase text-center tracking-wider">School of Informatics & Innovative Systems</p>
-            </div>
-
-            <div class="bg-slate-900/90 text-white p-5 rounded-2xl border border-slate-800 shadow-xl">
-                <h3 class="text-xs font-bold text-amber-400 tracking-wider uppercase mb-3">🔴 Live Lab Operational Status</h3>
-                <div class="space-y-3.5">
-                    <div class="flex justify-between items-center bg-slate-950/80 p-3 rounded-xl border border-slate-800">
-                        <div>
-                            <p class="text-xs font-bold">Lab 1 (20 Seats)</p>
-                            <p class="text-[10px] text-slate-400">{{ stats.LAB_1.active_issues }} Active Fault reports</p>
-                        </div>
-                        <span class="px-2.5 py-1 text-[11px] font-bold rounded-full bg-{{ stats.LAB_1.color }}-500/15 text-{{ stats.LAB_1.color }}-400 border border-{{ stats.LAB_1.color }}-500/30">
-                            {{ stats.LAB_1.health }}% Healthy
-                        </span>
-                    </div>
-                    <div class="flex justify-between items-center bg-slate-950/80 p-3 rounded-xl border border-slate-800">
-                        <div>
-                            <p class="text-xs font-bold">SIIS Lab (28 Seats)</p>
-                            <p class="text-[10px] text-slate-400">{{ stats.SIIS_LAB.active_issues }} Active Fault reports</p>
-                        </div>
-                        <span class="px-2.5 py-1 text-[11px] font-bold rounded-full bg-{{ stats.SIIS_LAB.color }}-500/15 text-{{ stats.SIIS_LAB.color }}-400 border border-{{ stats.SIIS_LAB.color }}-500/30">
-                            {{ stats.SIIS_LAB.health }}% Healthy
-                        </span>
-                    </div>
-                    <div class="flex justify-between items-center bg-slate-950/80 p-3 rounded-xl border border-slate-800">
-                        <div>
-                            <p class="text-xs font-bold">Multidisciplinary Lab (80 Seats)</p>
-                            <p class="text-[10px] text-slate-400">{{ stats.MULTIDISCIPLINARY.active_issues }} Active Fault reports</p>
-                        </div>
-                        <span class="px-2.5 py-1 text-[11px] font-bold rounded-full bg-{{ stats.MULTIDISCIPLINARY.color }}-500/15 text-{{ stats.MULTIDISCIPLINARY.color }}-400 border border-{{ stats.MULTIDISCIPLINARY.color }}-500/30">
-                            {{ stats.MULTIDISCIPLINARY.health }}% Healthy
-                        </span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="bg-slate-900/90 text-white p-5 rounded-2xl border border-slate-800 shadow-xl">
-                <h3 class="text-xs font-bold text-blue-400 tracking-wider uppercase mb-3">🛠️ Recently Resolved Feed</h3>
-                <div class="space-y-2 max-h-[180px] overflow-y-auto pr-1">
-                    {% if recent_resolutions %}
-                        {% for ticket in recent_resolutions %}
-                            <div class="bg-slate-950/80 p-2.5 rounded-lg border border-slate-800/80 flex items-start gap-2.5">
-                                <span class="p-1 rounded bg-emerald-500/20 text-emerald-400 text-xs mt-0.5">✔</span>
-                                <div>
-                                    <p class="text-[11px] font-semibold text-slate-200">Terminal <span class="text-amber-400 font-mono">{{ ticket.computer_number }}</span> ({{ ticket.get_lab_room_display }})</p>
-                                    <p class="text-[10px] text-slate-400 italic">Resolved: {{ ticket.get_category_display }}</p>
-                                </div>
-                            </div>
-                        {% endfor %}
-                    {% else %}
-                        <p class="text-[11px] text-slate-500 text-center py-4">No recently resolved tickets yet. Maintenance logs are clean!</p>
-                    {% endif %}
-                </div>
-            </div>
-
+        <div class="flex justify-between items-center mb-5 mt-2 border-b pb-3">
+            <a href="{% url 'home_dashboard' %}" class="inline-flex items-center gap-1 text-xs text-blue-900 font-bold hover:underline">
+                ⬅ Back to Home
+            </a>
+            <a href="/staff/" target="_blank" class="inline-flex items-center gap-1 px-3 py-1.5 bg-gradient-to-r from-blue-900 to-indigo-950 text-white text-[11px] font-bold rounded-lg shadow">
+                JOOUST Staff
+            </a>
         </div>
 
-        <div class="lg:col-span-7 bg-white/95 backdrop-blur-md p-6 md:p-8 rounded-2xl shadow-2xl border border-white/20 relative">
-            
-            <div class="absolute top-4 right-4">
-                <a href="/staff/" target="_blank" class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-gradient-to-r from-blue-900 to-indigo-950 hover:from-blue-800 hover:to-indigo-900 text-white text-xs font-bold rounded-lg shadow transition duration-150 transform hover:-translate-y-0.5">
-                    JOOUST Staff
-                </a>
-            </div>
+        <h2 class="text-lg font-bold text-slate-900 mb-4">Submit Lab Ticket</h2>
 
-            <h2 class="text-lg font-bold text-slate-900 mb-4 border-b pb-2 mt-4">Submit Lab Ticket</h2>
-
-            {% if messages %}
-                {% for message in messages %}
-                    <div class="mb-5 p-4 rounded-xl {% if 'Error' in message.tags or 'error' in message.tags %}bg-rose-50 border-rose-200 text-rose-850{% else %}bg-emerald-50 border border-emerald-200 text-emerald-800{% endif %} text-sm font-medium">
-                        {{ message }}
-                    </div>
-                {% endfor %}
-            {% endif %}
-
-            <div class="mb-4">
-                <p class="text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">⚡ Quick Templates (Auto-Fill)</p>
-                <div class="flex flex-wrap gap-2">
-                    <button type="button" onclick="applyTemplate('HARDWARE', 'Mouse / Keyboard is missing or physically damaged')" class="px-2.5 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs rounded-lg transition border border-slate-300/80 font-medium">
-                        🖱️ Missing Peripheral
-                    </button>
-                    <button type="button" onclick="applyTemplate('SOFTWARE', 'Windows Blue Screen of Death (BSOD) showing error code.')" class="px-2.5 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs rounded-lg transition border border-slate-300/80 font-medium">
-                        💻 Operating System Crash
-                    </button>
-                    <button type="button" onclick="applyTemplate('NETWORK', 'No network access. Internet connection is down or network cable disconnected.')" class="px-2.5 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs rounded-lg transition border border-slate-300/80 font-medium">
-                        🌐 Internet Offline
-                    </button>
+        {% if messages %}
+            {% for message in messages %}
+                <div class="mb-4 p-4 rounded-xl {% if 'Error' in message.tags or 'error' in message.tags %}bg-rose-50 border-rose-200 text-rose-850{% else %}bg-emerald-50 border border-emerald-200 text-emerald-800{% endif %} text-xs font-medium">
+                    {{ message }}
                 </div>
-            </div>
+            {% endfor %}
+        {% endif %}
 
-            <div class="mb-4 p-3.5 bg-slate-100/80 rounded-xl border border-slate-300/50">
-                <p class="text-xs font-bold text-slate-800 uppercase tracking-wider mb-2 flex justify-between items-center">
-                    <span>🗺️ Click Seat to Set Seat ID</span>
-                    <span class="text-[10px] text-slate-500 font-normal">Map Grid Layout</span>
-                </p>
-                <div id="terminal-map-grid" class="grid grid-cols-8 gap-1.5 max-h-[160px] overflow-y-auto p-1 bg-white rounded-lg border border-slate-200">
-                    </div>
-            </div>
-
-            <form method="POST" enctype="multipart/form-data" class="space-y-4">
-                {% csrf_token %}
-                
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                        <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Select Lab Location</label>
-                        {{ form.lab_room }}
-                    </div>
-                    <div>
-                        <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Computer Number / Tag</label>
-                        {{ form.computer_number }}
-                    </div>
-                </div>
-
-                <div>
-                    <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Issue Category</label>
-                    {{ form.category }}
-                </div>
-
-                <div>
-                    <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Detailed Description of the Issue</label>
-                    {{ form.description }}
-                </div>
-
-                <div>
-                    <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Attach Error Screenshot (Optional)</label>
-                    {{ form.screenshot }}
-                </div>
-
-                <div class="bg-blue-50/50 p-4 rounded-xl border border-blue-100">
-                    <label class="block text-sm font-bold text-blue-950 mb-1">Receive Status Updates (Optional)</label>
-                    {{ form.student_email }}
-                </div>
-
-                <button type="submit" class="w-full bg-gradient-to-r from-blue-950 to-indigo-950 hover:from-blue-900 hover:to-indigo-900 text-white font-bold py-2.5 px-4 rounded-xl shadow-lg transition tracking-wide uppercase text-xs">
-                    Submit Portal Ticket
+        <div class="mb-5">
+            <p class="text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">⚡ Quick Templates</p>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                <button type="button" onclick="applyTemplate('HARDWARE', 'Mouse / Keyboard is missing or physically damaged')" class="px-2.5 py-2 bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs rounded-lg transition border border-slate-300 font-medium text-left sm:text-center">
+                    🖱️ Missing Peripheral
                 </button>
-            </form>
+                <button type="button" onclick="applyTemplate('SOFTWARE', 'Windows Blue Screen of Death (BSOD) showing error code.')" class="px-2.5 py-2 bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs rounded-lg transition border border-slate-300 font-medium text-left sm:text-center">
+                    💻 OS Crash
+                </button>
+                <button type="button" onclick="applyTemplate('NETWORK', 'No network access. Internet connection is down.')" class="px-2.5 py-2 bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs rounded-lg transition border border-slate-300 font-medium text-left sm:text-center">
+                    🌐 Internet Offline
+                </button>
+            </div>
         </div>
 
+        <div class="mb-5 p-4 bg-slate-100/80 rounded-xl border border-slate-300/50">
+            <p class="text-xs font-bold text-slate-800 uppercase tracking-wider mb-2">🗺️ Select Seat/Computer</p>
+            <div id="terminal-map-grid" class="grid grid-cols-5 sm:grid-cols-8 gap-1.5 max-h-[160px] overflow-y-auto p-1.5 bg-white rounded-lg border border-slate-200">
+                </div>
+        </div>
+
+        <form method="POST" enctype="multipart/form-data" class="space-y-4">
+            {% csrf_token %}
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Select Lab Location</label>
+                    {{ form.lab_room }}
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Computer Number / Tag</label>
+                    {{ form.computer_number }}
+                </div>
+            </div>
+
+            <div>
+                <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Issue Category</label>
+                {{ form.category }}
+            </div>
+
+            <div>
+                <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Detailed Description</label>
+                {{ form.description }}
+            </div>
+
+            <div>
+                <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Attach Error Screenshot (Optional)</label>
+                {{ form.screenshot }}
+            </div>
+
+            <div class="bg-blue-50/50 p-4 rounded-xl border border-blue-100">
+                <label class="block text-xs font-bold text-blue-950 uppercase mb-1">Receive Status Updates (Optional)</label>
+                {{ form.student_email }}
+            </div>
+
+            <button type="submit" class="w-full bg-gradient-to-r from-blue-950 to-indigo-950 hover:from-blue-900 hover:to-indigo-900 text-white font-bold py-3 px-4 rounded-xl shadow-lg transition tracking-wide uppercase text-xs">
+                Submit Portal Ticket
+            </button>
+        </form>
     </div>
 
     <script>
-        // Dictionary of blocked/flagged computers passed from Django backend context
         const flaggedComputers = {
             'LAB_1': [{% for comp in flagged_computers.LAB_1 %}'{{ comp }}',{% endfor %}],
             'SIIS_LAB': [{% for comp in flagged_computers.SIIS_LAB %}'{{ comp }}',{% endfor %}],
             'MULTIDISCIPLINARY': [{% for comp in flagged_computers.MULTIDISCIPLINARY %}'{{ comp }}',{% endfor %}],
         };
 
-        // Standard lab capacity mapping
         const capacities = {
             'LAB_1': 20,
             'SIIS_LAB': 28,
@@ -192,7 +112,7 @@
             const maxSeats = capacities[selectedLab] || 20;
             const blockedList = flaggedComputers[selectedLab] || [];
             
-            mapGrid.innerHTML = ''; // Clear map
+            mapGrid.innerHTML = '';
             
             for (let i = 1; i <= maxSeats; i++) {
                 const compId = `COMP-${String(i).padStart(2, '0')}`;
@@ -204,12 +124,10 @@
                 btn.textContent = String(i).padStart(2, '0');
                 
                 if (isBlocked) {
-                    // Broken, flagged computer button setup (red and disabled)
                     btn.className = "p-1.5 text-xs font-mono rounded border border-rose-300 font-bold bg-rose-100 text-rose-600 cursor-not-allowed";
-                    btn.title = `${compId} is blocked (Active issue reported)`;
+                    btn.title = `${compId} is blocked`;
                     btn.disabled = true;
                 } else {
-                    // Available computer button setup
                     btn.className = "seat-btn bg-white hover:bg-blue-600 hover:text-white transition p-1.5 text-xs font-mono rounded border border-slate-300 font-bold text-slate-700 text-center";
                     btn.onclick = () => selectSeat(compId);
                 }
@@ -217,9 +135,8 @@
             }
         }
 
-        // Handle lab select changes to redraw the grid immediately
         labSelect.addEventListener('change', () => {
-            pcInput.value = ''; // Reset chosen computer on lab swap
+            pcInput.value = '';
             generateMap();
         });
 
@@ -244,7 +161,6 @@
             }
         }
 
-        // Initialize grid map on page load
         generateMap();
     </script>
 

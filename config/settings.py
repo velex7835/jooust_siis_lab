@@ -76,3 +76,11 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 CSRF_TRUSTED_ORIGINS = ['https://velex.pythonanywhere.com']
+# Email SMTP settings (e.g., using Gmail)
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'velexcohen56@gmail.com'       # Put your actual gmail here
+EMAIL_HOST_PASSWORD = 'mhqb hzym hlvt izax'     # Put your 16-character google app password here
+DEFAULT_FROM_EMAIL = 'JOOUST SIIS Labs <velexcohen56@gmail.com>'

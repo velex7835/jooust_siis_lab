@@ -35,7 +35,7 @@
                 <div class="space-y-3.5">
                     <div class="flex justify-between items-center bg-slate-950/80 p-3 rounded-xl border border-slate-800">
                         <div>
-                            <p class="text-xs font-bold">Lab 1</p>
+                            <p class="text-xs font-bold">Lab 1 (20 Seats)</p>
                             <p class="text-[10px] text-slate-400">{{ stats.LAB_1.active_issues }} Active Fault reports</p>
                         </div>
                         <span class="px-2.5 py-1 text-[11px] font-bold rounded-full bg-{{ stats.LAB_1.color }}-500/15 text-{{ stats.LAB_1.color }}-400 border border-{{ stats.LAB_1.color }}-500/30">
@@ -44,7 +44,7 @@
                     </div>
                     <div class="flex justify-between items-center bg-slate-950/80 p-3 rounded-xl border border-slate-800">
                         <div>
-                            <p class="text-xs font-bold">SIIS Lab</p>
+                            <p class="text-xs font-bold">SIIS Lab (28 Seats)</p>
                             <p class="text-[10px] text-slate-400">{{ stats.SIIS_LAB.active_issues }} Active Fault reports</p>
                         </div>
                         <span class="px-2.5 py-1 text-[11px] font-bold rounded-full bg-{{ stats.SIIS_LAB.color }}-500/15 text-{{ stats.SIIS_LAB.color }}-400 border border-{{ stats.SIIS_LAB.color }}-500/30">
@@ -53,7 +53,7 @@
                     </div>
                     <div class="flex justify-between items-center bg-slate-950/80 p-3 rounded-xl border border-slate-800">
                         <div>
-                            <p class="text-xs font-bold">Multidisciplinary Lab</p>
+                            <p class="text-xs font-bold">Multidisciplinary Lab (80 Seats)</p>
                             <p class="text-[10px] text-slate-400">{{ stats.MULTIDISCIPLINARY.active_issues }} Active Fault reports</p>
                         </div>
                         <span class="px-2.5 py-1 text-[11px] font-bold rounded-full bg-{{ stats.MULTIDISCIPLINARY.color }}-500/15 text-{{ stats.MULTIDISCIPLINARY.color }}-400 border border-{{ stats.MULTIDISCIPLINARY.color }}-500/30">
@@ -96,7 +96,7 @@
 
             {% if messages %}
                 {% for message in messages %}
-                    <div class="mb-5 p-4 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-sm font-medium">
+                    <div class="mb-5 p-4 rounded-xl {% if 'Error' in message.tags or 'error' in message.tags %}bg-rose-50 border-rose-200 text-rose-850{% else %}bg-emerald-50 border border-emerald-200 text-emerald-800{% endif %} text-sm font-medium">
                         {{ message }}
                     </div>
                 {% endfor %}
@@ -120,26 +120,10 @@
             <div class="mb-4 p-3.5 bg-slate-100/80 rounded-xl border border-slate-300/50">
                 <p class="text-xs font-bold text-slate-800 uppercase tracking-wider mb-2 flex justify-between items-center">
                     <span>🗺️ Click Seat to Set Seat ID</span>
-                    <span class="text-[10px] text-slate-500 font-normal">Lab Map Seat Layout</span>
+                    <span class="text-[10px] text-slate-500 font-normal">Map Grid Layout</span>
                 </p>
-                <div class="grid grid-cols-8 gap-1.5">
-                    <button type="button" onclick="selectSeat('COMP-01')" id="seat-COMP-01" class="seat-btn bg-white hover:bg-blue-600 hover:text-white transition p-1.5 text-xs font-mono rounded border border-slate-300 font-bold text-slate-700 text-center">01</button>
-                    <button type="button" onclick="selectSeat('COMP-02')" id="seat-COMP-02" class="seat-btn bg-white hover:bg-blue-600 hover:text-white transition p-1.5 text-xs font-mono rounded border border-slate-300 font-bold text-slate-700 text-center">02</button>
-                    <button type="button" onclick="selectSeat('COMP-03')" id="seat-COMP-03" class="seat-btn bg-white hover:bg-blue-600 hover:text-white transition p-1.5 text-xs font-mono rounded border border-slate-300 font-bold text-slate-700 text-center">03</button>
-                    <button type="button" onclick="selectSeat('COMP-04')" id="seat-COMP-04" class="seat-btn bg-white hover:bg-blue-600 hover:text-white transition p-1.5 text-xs font-mono rounded border border-slate-300 font-bold text-slate-700 text-center">04</button>
-                    <button type="button" onclick="selectSeat('COMP-05')" id="seat-COMP-05" class="seat-btn bg-white hover:bg-blue-600 hover:text-white transition p-1.5 text-xs font-mono rounded border border-slate-300 font-bold text-slate-700 text-center">05</button>
-                    <button type="button" onclick="selectSeat('COMP-06')" id="seat-COMP-06" class="seat-btn bg-white hover:bg-blue-600 hover:text-white transition p-1.5 text-xs font-mono rounded border border-slate-300 font-bold text-slate-700 text-center">06</button>
-                    <button type="button" onclick="selectSeat('COMP-07')" id="seat-COMP-07" class="seat-btn bg-white hover:bg-blue-600 hover:text-white transition p-1.5 text-xs font-mono rounded border border-slate-300 font-bold text-slate-700 text-center">07</button>
-                    <button type="button" onclick="selectSeat('COMP-08')" id="seat-COMP-08" class="seat-btn bg-white hover:bg-blue-600 hover:text-white transition p-1.5 text-xs font-mono rounded border border-slate-300 font-bold text-slate-700 text-center">08</button>
-                    <button type="button" onclick="selectSeat('COMP-09')" id="seat-COMP-09" class="seat-btn bg-white hover:bg-blue-600 hover:text-white transition p-1.5 text-xs font-mono rounded border border-slate-300 font-bold text-slate-700 text-center">09</button>
-                    <button type="button" onclick="selectSeat('COMP-10')" id="seat-COMP-10" class="seat-btn bg-white hover:bg-blue-600 hover:text-white transition p-1.5 text-xs font-mono rounded border border-slate-300 font-bold text-slate-700 text-center">10</button>
-                    <button type="button" onclick="selectSeat('COMP-11')" id="seat-COMP-11" class="seat-btn bg-white hover:bg-blue-600 hover:text-white transition p-1.5 text-xs font-mono rounded border border-slate-300 font-bold text-slate-700 text-center">11</button>
-                    <button type="button" onclick="selectSeat('COMP-12')" id="seat-COMP-12" class="seat-btn bg-white hover:bg-blue-600 hover:text-white transition p-1.5 text-xs font-mono rounded border border-slate-300 font-bold text-slate-700 text-center">12</button>
-                    <button type="button" onclick="selectSeat('COMP-13')" id="seat-COMP-13" class="seat-btn bg-white hover:bg-blue-600 hover:text-white transition p-1.5 text-xs font-mono rounded border border-slate-300 font-bold text-slate-700 text-center">13</button>
-                    <button type="button" onclick="selectSeat('COMP-14')" id="seat-COMP-14" class="seat-btn bg-white hover:bg-blue-600 hover:text-white transition p-1.5 text-xs font-mono rounded border border-slate-300 font-bold text-slate-700 text-center">14</button>
-                    <button type="button" onclick="selectSeat('COMP-15')" id="seat-COMP-15" class="seat-btn bg-white hover:bg-blue-600 hover:text-white transition p-1.5 text-xs font-mono rounded border border-slate-300 font-bold text-slate-700 text-center">15</button>
-                    <button type="button" onclick="selectSeat('COMP-16')" id="seat-COMP-16" class="seat-btn bg-white hover:bg-blue-600 hover:text-white transition p-1.5 text-xs font-mono rounded border border-slate-300 font-bold text-slate-700 text-center">16</button>
-                </div>
+                <div id="terminal-map-grid" class="grid grid-cols-8 gap-1.5 max-h-[160px] overflow-y-auto p-1 bg-white rounded-lg border border-slate-200">
+                    </div>
             </div>
 
             <form method="POST" enctype="multipart/form-data" class="space-y-4">
@@ -185,31 +169,83 @@
     </div>
 
     <script>
+        // Dictionary of blocked/flagged computers passed from Django backend context
+        const flaggedComputers = {
+            'LAB_1': [{% for comp in flagged_computers.LAB_1 %}'{{ comp }}',{% endfor %}],
+            'SIIS_LAB': [{% for comp in flagged_computers.SIIS_LAB %}'{{ comp }}',{% endfor %}],
+            'MULTIDISCIPLINARY': [{% for comp in flagged_computers.MULTIDISCIPLINARY %}'{{ comp }}',{% endfor %}],
+        };
+
+        // Standard lab capacity mapping
+        const capacities = {
+            'LAB_1': 20,
+            'SIIS_LAB': 28,
+            'MULTIDISCIPLINARY': 80
+        };
+
+        const labSelect = document.querySelector('[name="lab_room"]');
+        const mapGrid = document.getElementById('terminal-map-grid');
+        const pcInput = document.querySelector('[name="computer_number"]');
+
+        function generateMap() {
+            const selectedLab = labSelect.value;
+            const maxSeats = capacities[selectedLab] || 20;
+            const blockedList = flaggedComputers[selectedLab] || [];
+            
+            mapGrid.innerHTML = ''; // Clear map
+            
+            for (let i = 1; i <= maxSeats; i++) {
+                const compId = `COMP-${String(i).padStart(2, '0')}`;
+                const isBlocked = blockedList.includes(compId);
+                
+                const btn = document.createElement('button');
+                btn.type = 'button';
+                btn.id = 'seat-' + compId;
+                btn.textContent = String(i).padStart(2, '0');
+                
+                if (isBlocked) {
+                    // Broken, flagged computer button setup (red and disabled)
+                    btn.className = "p-1.5 text-xs font-mono rounded border border-rose-300 font-bold bg-rose-100 text-rose-600 cursor-not-allowed";
+                    btn.title = `${compId} is blocked (Active issue reported)`;
+                    btn.disabled = true;
+                } else {
+                    // Available computer button setup
+                    btn.className = "seat-btn bg-white hover:bg-blue-600 hover:text-white transition p-1.5 text-xs font-mono rounded border border-slate-300 font-bold text-slate-700 text-center";
+                    btn.onclick = () => selectSeat(compId);
+                }
+                mapGrid.appendChild(btn);
+            }
+        }
+
+        // Handle lab select changes to redraw the grid immediately
+        labSelect.addEventListener('change', () => {
+            pcInput.value = ''; // Reset chosen computer on lab swap
+            generateMap();
+        });
+
         function applyTemplate(category, description) {
             const categorySelect = document.querySelector('[name="category"]');
             const descriptionArea = document.querySelector('[name="description"]');
-            
             categorySelect.value = category;
             descriptionArea.value = description;
-            
             categorySelect.dispatchEvent(new Event('change'));
         }
 
         function selectSeat(seatId) {
-            const pcInput = document.querySelector('[name="computer_number"]');
             pcInput.value = seatId;
-            
             document.querySelectorAll('.seat-btn').forEach(btn => {
                 btn.classList.remove('bg-blue-600', 'text-white');
                 btn.classList.add('bg-white', 'text-slate-700');
             });
-            
             const activeBtn = document.getElementById('seat-' + seatId);
             if (activeBtn) {
                 activeBtn.classList.remove('bg-white', 'text-slate-700');
                 activeBtn.classList.add('bg-blue-600', 'text-white');
             }
         }
+
+        // Initialize grid map on page load
+        generateMap();
     </script>
 
 </body>
